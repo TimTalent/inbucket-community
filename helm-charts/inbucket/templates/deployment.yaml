@@ -54,7 +54,23 @@ spec:
             timeoutSeconds: 5
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+        {{- if .Values.storage.enabled }}
+          volumeMounts:
+            - mountPath: {{ .Values.storage.volume.path }}
+              name: {{ .Values.storage.volume.name }}
+              readOnly: false
+        {{- end }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
+    {{- end }}
+    {{- if .Values.storage.enabled }}
+      volumes:
+        - name: {{ .Values.storage.volume.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.storage.claim.name }}
     {{- end }}

@@ -74,3 +74,13 @@ ingress:
 
 podAnnotations: {}
 resources: {}
+
+storage:
+  enabled: false
+  volume:
+    name: inbucket
+    path: /storage
+  claim:
+    name: inbucket
+    size: 1Gi
+    class: default
