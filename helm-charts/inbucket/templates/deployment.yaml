@@ -54,10 +54,10 @@ spec:
             timeoutSeconds: 5
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-        {{- if .Values.storage.enabled }}
+        {{- if .Values.persistence.enabled }}
           volumeMounts:
-            - mountPath: {{ .Values.storage.volume.path }}
-              name: {{ .Values.storage.volume.name }}
+            - mountPath: {{ .Values.persistence.path }}
+              name: {{ include "inbucket.fullname" . }}
               readOnly: false
         {{- end }}
     {{- if .Values.nodeSelector }}
@@ -68,9 +68,9 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations | indent 6 }}
     {{- end }}
-    {{- if .Values.storage.enabled }}
+    {{- if .Values.persistence.enabled }}
       volumes:
-        - name: {{ .Values.storage.volume.name }}
+        - name: {{ include "inbucket.fullname" . }}
           persistentVolumeClaim:
-            claimName: {{ .Values.storage.claim.name }}
+            claimName: {{ include "inbucket.fullname" . }}
     {{- end }}

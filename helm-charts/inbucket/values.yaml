@@ -75,12 +75,9 @@ ingress:
 podAnnotations: {}
 resources: {}
 
-storage:
+persistence:
   enabled: false
-  volume:
-    name: inbucket
-    path: /storage
-  claim:
-    name: inbucket
-    size: 1Gi
-    class: default
+  path: /storage
+  size: 1Gi
+  className: default
+  accessMode: ReadWriteOnce

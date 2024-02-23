@@ -1,8 +1,8 @@
-{{- if .Values.storage.enabled }}
+{{- if .Values.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.storage.claim.name }}
+  name: {{ include "inbucket.fullname" . }}
   labels:
     app.kubernetes.io/name: {{ include "inbucket.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -10,9 +10,9 @@ metadata:
     helm.sh/chart: {{ include "inbucket.chart" . }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ .Values.persistence.accessMode }}
   resources:
     requests:
-      storage: "{{ .Values.storage.claim.size }}"
-  storageClassName: {{ .Values.storage.claim.class }}
+      storage: {{ .Values.persistence.size }}
+  storageClassName: {{ .Values.persistence.className }}
 {{- end }}
