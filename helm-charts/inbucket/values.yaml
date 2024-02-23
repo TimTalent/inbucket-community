@@ -79,5 +79,5 @@ persistence:
   enabled: false
   path: /storage
   size: 1Gi
-  className: default
+  className:
   accessMode: ReadWriteOnce
